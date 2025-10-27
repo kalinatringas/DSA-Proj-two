@@ -15,26 +15,28 @@ class Heap :
     def is_empty(self):
         return len(self.data)== 0
 
-    def _insert(self, val):
+    def insert(self, val):
+        self.data.append(val)
+        self._heapify_up(len(self.data)-1)
         return self.data.append(val)
         #need to bubble it up
     
-    def _peek (self):
+    def peek (self):
         if self.is_empty():
             raise IndexError("Heap is empty")
         return self.data[0]
     
-    def pop(self, val):
+    def pop(self):
             # replace the root with the smallest (min) or largest element
             # return the top!
             if self.is_empty():
                 raise IndexError("Heap is empty")
-            self.data.remove(val)
+            ##self.data.remove(top)
             top = self.data[0]
             last = self.data.pop()
             if not self.is_empty():
                 self.data[0] = last
-                self._heapify_up(len(self.data)-1)
+                self._heapify_down(len(self.data)-1)
             return top 
             
     
@@ -48,7 +50,7 @@ class Heap :
             parent  = (index -1) //2 
 
     
-    def heapify_down(self,index):
+    def _heapify_down(self,index):
         #compare parent with largst ele, swapping when needed
         size = len(self.data)
         while True:
@@ -64,4 +66,18 @@ class Heap :
                 break
 
             self.data[index], self.data[smallest] = self.data[smallest], self.data[index]
+
+    def heapify(self, array):
+        '''Start from the last non-leaf node (at index n//2 - 1)
+
+        Call heapify_down for each node moving backward to the root
+
+        This is more efficient than inserting one-by-one (O(n) instead of O(n log n))'''
+        start = len(array)//2 -1
+        i = start
+        while i >= 0: 
+            self._heapify_down(i)
+            i-=1
+   
+           
 
