@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
-movies = pd.read_csv("./.ignoreme/TMDB_movie_dataset_v11.csv")
+movies = pd.read_csv("TMDB_movie_dataset_v11.csv")
 movies['genres'] = movies['genres'].fillna('')
 movies['keywords'] = movies['keywords'].fillna('')  
 movies['tagline'] = movies['tagline'].fillna('')
@@ -31,24 +31,9 @@ movies["combined"] = (movies['genres'] + ' ' +
                      movies['overview'] + ' ' + 
                      movies['vote_average'].astype(str) + ' ' + 
                      movies['keywords'])
-movies = movies.head(10000)
-#vectorizerSearch = TfidfVectorizer(ngram_range=(1,2))
-
-# will be replaced by own function
-#tfidf = vectorizerSearch.fit_transform(movies["clean_title"])
-
+movies = movies.head(100000)
 vectorizerKeywords = TfidfVectorizer(ngram_range=(1,2)) # see what this has that I don
 tfdif_matrix = vectorizerKeywords.fit_transform(movies['combined'])
-
-#cosine_sim = cosine_similarity(tfdif_matrix, tfdif_matrix)
-
-# def search(title):
-# #title = "Inception"
-#     title = clean_title(title)
-#     query_vec = vectorizerSearch.transform([title])
-#     simularity = cosine_similarity(query_vec, tfidf).flatten()
-#     indicies = np.argpartition(simularity, -5)[-5:] # finds the five most simular
-#     return movies.iloc[indicies][::-1]
 
 
 movies = movies.reset_index()
@@ -60,13 +45,14 @@ def reccomend(movie_title: str, n=5):
         print(f"Movie '{movie_title}' not found")
         return pd.Series(dtype=str)
     idx = matches.index[0]
-    sim_scores = list(enumerate(cosine_sim[idx]))
+    movie_vector = tfdif_matrix[idx]
 
-    sim_scores = sorted(sim_scores, key=lambda x : x[1], reverse=True)
-    sim_scores = sim_scores[1:n+1]
-    
-    movie_indicies = [i[0] for i in sim_scores]
-    return movies['clean_title'].iloc[movie_indicies]
+    sim_scores = cosine_similarity(movie_vector, tfdif_matrix).flatten()
+
+    top_indicies = np.argpartition(sim_scores, -n-1)
+    top_indicies = top_indicies[np.argsort(-sim_scores[top_indicies])]
+    top_indicies = top_indicies[top_indicies != idx][:n]
+    return movies['clean_title'].iloc[top_indicies]
 
 # def reccomend(title_index, top_n = 2):
 #     sim_scores = sim
