@@ -1,7 +1,6 @@
 # cosine sim
 import numpy as np
 import re
-import pandas as pd
 from collections import Counter
 
 def clean_text(text) -> str:
@@ -75,7 +74,7 @@ class CosineSimAlgo:
 
 
     def cosine_sim_man(self, vec1, vec2):
-        print("Computing Cosine Similarity...")
+        #print("Computing Cosine Similarity...")
         # A dot B div by norm A  norm B, from linear alg!
         dot_product = np.dot(vec1,vec2) #thank you numpy
         norm1 = np.linalg.norm(vec1)
@@ -99,6 +98,7 @@ class CosineSimAlgo:
 
         # compute similarity scores using cosine similarity
         sim_scores = []
+        print("Computing Cosine Similarity...")
         for i in range(len(self.movies)):
             sim = self.cosine_sim_man(movie_vector, self.tfidf_matrix[i])
             sim_scores.append(sim)

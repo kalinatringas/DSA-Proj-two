@@ -18,4 +18,5 @@ algorithm = algo(movies)
 movies = movies.reset_index()
 
 if __name__ == "__main__":
-    print(algorithm.recommend("Inception"))
+    movie = input("What movie did you like? :")
+    print(algorithm.recommend(movie))
