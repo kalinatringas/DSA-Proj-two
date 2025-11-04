@@ -1,5 +1,5 @@
 # Class File for Heaps
-
+# 0 based heap
 class Heap :
     def __init__(self, is_min=True):
         self.data = []
@@ -74,10 +74,13 @@ class Heap :
 
         This is more efficient than inserting one-by-one (O(n) instead of O(n log n))'''
         start = len(array)//2 -1
-        i = start
-        while i >= 0: 
-            self._heapify_down(i)
-            i-=1
+        if self.is_min:
+            for i in reversed(range(start//2)):
+                self._heapify_down(i)
+        else: 
+            for i in reversed(range(start//2)):
+                self._heapify_up(i)
+     
    
            
 
