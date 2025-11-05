@@ -18,7 +18,6 @@ class Heap :
     def insert(self, val):
         self.data.append(val)
         self._heapify_up(len(self.data)-1)
-        return self.data.append(val)
         #need to bubble it up
     
     def peek (self):
@@ -36,7 +35,8 @@ class Heap :
             last = self.data.pop()
             if not self.is_empty():
                 self.data[0] = last
-                self._heapify_down(len(self.data)-1)
+                self._heapify_down(0)
+            #Was heapifying down from end, not from root
             return top 
             
     
@@ -66,18 +66,19 @@ class Heap :
                 break
 
             self.data[index], self.data[smallest] = self.data[smallest], self.data[index]
+            index = smallest 
+            #need to update index
 
     def heapify(self, array):
-        '''Start from the last non-leaf node (at index n//2 - 1)
+        '''Start from the last non-leaf node (at index n//2 - 1)''' 
+        'Call heapify_down for each node moving backward to the root''
 
-        Call heapify_down for each node moving backward to the root
-
-        This is more efficient than inserting one-by-one (O(n) instead of O(n log n))'''
+        'This is more efficient than inserting one-by-one (O(n) instead of O(n log n))'''
+        #have to set data
+        self.data = array
         start = len(array)//2 -1
-        i = start
-        while i >= 0: 
-            self._heapify_down(i)
-            i-=1
-   
+        for i in range(start,-1,-1):
+            self.heapify_down(i)
+
            
 
