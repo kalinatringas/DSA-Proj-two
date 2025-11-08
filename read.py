@@ -19,4 +19,4 @@ movies = movies.reset_index()
 
 if __name__ == "__main__":
     movie = input("What movie did you like? :")
-    print(algorithm.recommend(movie))
+    print(f"Here is what the cosine simulary function reccomended: \n{algorithm.recommend(movie)}")

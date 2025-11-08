@@ -34,7 +34,7 @@ class CosineSimAlgo:
         words = document_text.split()
         word_count = Counter(words)
         total_words = len(words)
-
+        # runs in O(len(self.vocab))
         for word in self.vocab:
             count = word_count.get(word, 0)
             tf_dict[word] = count / float(total_words) if total_words > 0 else 0
@@ -47,6 +47,7 @@ class CosineSimAlgo:
         # TF-IDF = TF * IDF
         N = len(self.movies)
         # building document-term matrix (DTM)
+        # runs in O(len(self.movies[combined])* len(word_count.items()))
         print("Building document-term-matrix...")
         dtm = np.zeros((N, self.vocab_size))
         doc_lengths = np.zeros(N)

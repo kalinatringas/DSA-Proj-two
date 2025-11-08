@@ -1,5 +1,5 @@
 # Class File for Heaps
-
+# 0 based heap
 class Heap :
     def __init__(self, is_min=True):
         self.data = []
@@ -77,8 +77,13 @@ class Heap :
         #have to set data
         self.data = array
         start = len(array)//2 -1
-        for i in range(start,-1,-1):
-            self.heapify_down(i)
-
+        if self.is_min:
+            for i in reversed(range(start//2)):
+                self._heapify_down(i)
+        else: 
+            for i in reversed(range(start//2)):
+                self._heapify_up(i)
+     
+   
            
 
