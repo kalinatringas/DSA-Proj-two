@@ -73,8 +73,8 @@ class CosineSimAlgo:
         print("TF-IDF Matrix computed!")
 
 
-
-    def cosine_sim_man(self, vec1, vec2):
+    @staticmethod
+    def cosine_sim_man(vec1, vec2):
         #print("Computing Cosine Similarity...")
         # A dot B div by norm A  norm B, from linear alg!
         dot_product = np.dot(vec1,vec2) #thank you numpy
