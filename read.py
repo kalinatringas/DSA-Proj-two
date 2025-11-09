@@ -1,3 +1,4 @@
+import time
 import re
 import pandas as pd
 from cosineSim import CosineSimAlgo as algo
@@ -39,18 +40,28 @@ def build_similarity_heap(input_title, movies, tfidf_matrix):
     for i, title in enumerate(movies['title']):
         if i == input_idx:
             continue  # skip comparing to itself
-        similarity = algo.cosine_sim_man(input_vector, tfidf_matrix[i])
+        similarity = algorithm.cosine_sim_man(input_vector, tfidf_matrix[i])
         heap.insert((similarity, title))
     return heap
 
 def heap_recommend(heap, k=5):
-    for _ in range(min(k, len(heap))):
+    for _ in range(k):
         sim, title = heap.pop()
         print(f"{title} — Similarity: {sim:.3f}")
 
 if __name__ == "__main__":
     movie = input("What movie did you like?: ")
+    start_time = time.perf_counter()
     print(f"Here is what the KNN algorithm recommended: \n{algorithm.recommend(movie)}")
+    end_time = time.perf_counter()
+    elapsed_time = end_time - start_time
+    print(f"Elapsed time: {elapsed_time:.4f} seconds")
+    heap_start_time = time.perf_counter()
     heap = build_similarity_heap(movie, movies, algorithm.tfidf_matrix)
     print("Here is what the heap recommended:")
-    heap_recommend(movie, heap)
+    heap_recommend(heap)
+    heap_end_time = time.perf_counter()
+    heap_elapsed_time = heap_end_time - heap_start_time
+    print(f"Elapsed time: {heap_elapsed_time:.4f} seconds")
+    result = "faster" if elapsed_time > heap_elapsed_time else "slower"
+    print(f"\nThe KNN algorithm was {elapsed_time/heap_elapsed_time:.4f} times {result}!")

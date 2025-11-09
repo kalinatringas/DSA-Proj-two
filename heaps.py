@@ -70,8 +70,8 @@ class Heap :
             #need to update index
 
     def heapify(self, array):
-        '''Start from the last non-leaf node (at index n//2 - 1)''' 
-        'Call heapify_down for each node moving backward to the root''
+        '''Start from the last non-leaf node (at index n//2 - 1)
+        'Call heapify_down for each node moving backward to the root
 
         'This is more efficient than inserting one-by-one (O(n) instead of O(n log n))'''
         #have to set data
@@ -83,7 +83,3 @@ class Heap :
         else: 
             for i in reversed(range(start//2)):
                 self._heapify_up(i)
-     
-   
-           
-
