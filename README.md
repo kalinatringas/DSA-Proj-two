@@ -12,7 +12,7 @@ Heap-Based Recommendation – Builds a heap of similarity scores to efficiently 
 
 ## Dataset
 
-Source: (TMDB_movie_dataset_v11.csv)[https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies]
+Source: [TMDB_movie_dataset_v11.csv](https://www.kaggle.com/datasets/asaniczka/tmdb-movies-dataset-2023-930k-movies)
 > due to the datasets large size, you will have to download the dataset yourself in order to run the program
 
 Columns used:
@@ -42,3 +42,4 @@ Large datasets can consume significant memory, so we have limited dataset size f
 Currently, the system relies on exact or substring matches of movie titles.
 
 TF-IDF vocabulary is limited to the top 15,000 words to reduce memory usage.
+
